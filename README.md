@@ -2,7 +2,7 @@
 
 Membres:YOUSSEF Daniel, SAMY Eshina - TD 1 STI 3A
 
-## 1. 
+## 1. Groupe
 Membres du groupe et identifiants GitHub.
 Eshina Samy : samyeshina
 Daniel Youssef : Daniel31-dive
