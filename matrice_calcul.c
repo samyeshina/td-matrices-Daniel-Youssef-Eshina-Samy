@@ -75,14 +75,15 @@ MatErreur mat_multiplier(const Matrice *a, const Matrice *b,
     if (err != MAT_OK)
         return err;
 
-    /* (3.e) À COMPLÉTER : le produit a x b n'existe que si le nombre de
-     *       COLONNES de a est égal au nombre de LIGNES de b.
-     *       Sinon, renvoyer MAT_ERR_DIMENSIONS.                       */
+    if (a->nb_colonnes != b->nb_lignes)
+    return MAT_ERR_DIMENSIONS;
 
 
-    /* (3.f) À COMPLÉTER : allouer r de dimensions
-     *       (lignes de a) x (colonnes de b).                          */
+                         
     Matrice r = MATRICE_VIDE;
+    err = mat_allouer(&r, a->nb_lignes, b->nb_colonnes);
+    if (err != MAT_OK)
+    return err;
 
 
     for (int i = 0; i < r.nb_lignes; i++) {              /* FOURNI */
