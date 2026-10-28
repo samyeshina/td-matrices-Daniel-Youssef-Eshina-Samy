@@ -1,9 +1,11 @@
 # Compte rendu — TD Stockage de matrices en C
 
-Memebres:YOUSSEF Daniel, SAMY Eshina
+Membres:YOUSSEF Daniel, SAMY Eshina - TD 1 STI 3A
 
-## 1. En-tête
-- Membres du groupe et identifiants GitHub.
+## 1. 
+Membres du groupe et identifiants GitHub.
+Eshina Samy : samyeshina
+Daniel Youssef : Daniel31-dive
 
 ## 2. Introduction
 
