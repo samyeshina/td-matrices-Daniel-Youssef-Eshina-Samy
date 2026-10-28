@@ -41,10 +41,11 @@ MatErreur mat_additionner(const Matrice *a, const Matrice *b,
     return MAT_ERR_DIMENSIONS;
 
 
-    /* (3.b) À COMPLÉTER : allouer r avec les dimensions de a ;
-     *         err = mat_allouer(&r, ..., ...);
-     *         if (err != MAT_OK) return err;                          */
+                       
     Matrice r = MATRICE_VIDE;
+    err = mat_allouer(&r, a->nb_lignes, a->nb_colonnes);
+    if (err != MAT_OK)
+    return err;
 
 
     /* FOURNI : parcours de tous les coefficients de r. */
