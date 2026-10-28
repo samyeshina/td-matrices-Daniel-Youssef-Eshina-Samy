@@ -44,10 +44,13 @@ void mat_afficher(const char *nom, const Matrice *m)
     }
     printf("%s (%d x %d) :\n", nom, m->nb_lignes, m->nb_colonnes);
 
-    /* (2.a) À COMPLÉTER : pour chaque ligne i, afficher chaque
-     *       coefficient avec printf(" %8d", m->coef[i][j]),
-     *       puis passer à la ligne avec putchar('\n').               */
-}
+    /* (2.a) */
+    for (int i = 0; i < m->nb_lignes; i++) {
+         for (int j = 0; j < m->nb_colonnes; j++) {
+              printf(" %8d", m->coef[i][j]);
+              }
+    putchar('\n');
+    }
 
 MatErreur mat_ecrire(FILE *f, const Matrice *m)
 {
