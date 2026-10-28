@@ -1,0 +1,25 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     demo_matrices
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002650, symSize: 0x290 }
+  - { offsetInCU: 0x82, offset: 0x82, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002650, symSize: 0x290 }
+  - { offsetInCU: 0x11E, offset: 0x11E, size: 0x8, addend: 0x0, symName: _charger, symObjAddr: 0x290, symBinAddr: 0x1000028E0, symSize: 0x138 }
+  - { offsetInCU: 0x170, offset: 0x170, size: 0x8, addend: 0x0, symName: _sauvegarder, symObjAddr: 0x3C8, symBinAddr: 0x100002A18, symSize: 0x150 }
+  - { offsetInCU: 0x26, offset: 0x444, size: 0x8, addend: 0x0, symName: _mat_message_erreur, symObjAddr: 0x0, symBinAddr: 0x100002B68, symSize: 0xDC }
+  - { offsetInCU: 0x81, offset: 0x49F, size: 0x8, addend: 0x0, symName: _mat_message_erreur, symObjAddr: 0x0, symBinAddr: 0x100002B68, symSize: 0xDC }
+  - { offsetInCU: 0xA9, offset: 0x4C7, size: 0x8, addend: 0x0, symName: _mat_est_valide, symObjAddr: 0xFC, symBinAddr: 0x100002C64, symSize: 0xD4 }
+  - { offsetInCU: 0x26, offset: 0x57D, size: 0x8, addend: 0x0, symName: _mat_allouer, symObjAddr: 0x0, symBinAddr: 0x100002D38, symSize: 0x1E4 }
+  - { offsetInCU: 0x7A, offset: 0x5D1, size: 0x8, addend: 0x0, symName: _mat_allouer, symObjAddr: 0x0, symBinAddr: 0x100002D38, symSize: 0x1E4 }
+  - { offsetInCU: 0x104, offset: 0x65B, size: 0x8, addend: 0x0, symName: _mat_detruire, symObjAddr: 0x1E4, symBinAddr: 0x100002F1C, symSize: 0xC4 }
+  - { offsetInCU: 0x26, offset: 0x71A, size: 0x8, addend: 0x0, symName: _mat_afficher, symObjAddr: 0x0, symBinAddr: 0x100002FE0, symSize: 0x158 }
+  - { offsetInCU: 0x89, offset: 0x77D, size: 0x8, addend: 0x0, symName: _mat_afficher, symObjAddr: 0x0, symBinAddr: 0x100002FE0, symSize: 0x158 }
+  - { offsetInCU: 0xF3, offset: 0x7E7, size: 0x8, addend: 0x0, symName: _mat_ecrire, symObjAddr: 0x158, symBinAddr: 0x100003138, symSize: 0x22C }
+  - { offsetInCU: 0x161, offset: 0x855, size: 0x8, addend: 0x0, symName: _mat_lire, symObjAddr: 0x384, symBinAddr: 0x100003364, symSize: 0x238 }
+  - { offsetInCU: 0x207, offset: 0x8FB, size: 0x8, addend: 0x0, symName: _lire_entier, symObjAddr: 0x5BC, symBinAddr: 0x10000359C, symSize: 0x170 }
+  - { offsetInCU: 0x26, offset: 0xBE4, size: 0x8, addend: 0x0, symName: _mat_additionner, symObjAddr: 0x0, symBinAddr: 0x10000370C, symSize: 0x1E4 }
+  - { offsetInCU: 0x81, offset: 0xC3F, size: 0x8, addend: 0x0, symName: _mat_additionner, symObjAddr: 0x0, symBinAddr: 0x10000370C, symSize: 0x1E4 }
+  - { offsetInCU: 0x135, offset: 0xCF3, size: 0x8, addend: 0x0, symName: _verifier_parametres, symObjAddr: 0x1E4, symBinAddr: 0x1000038F0, symSize: 0xD4 }
+  - { offsetInCU: 0x179, offset: 0xD37, size: 0x8, addend: 0x0, symName: _tient_dans_int, symObjAddr: 0x2B8, symBinAddr: 0x1000039C4, symSize: 0x50 }
+  - { offsetInCU: 0x1A1, offset: 0xD5F, size: 0x8, addend: 0x0, symName: _mat_multiplier, symObjAddr: 0x308, symBinAddr: 0x100003A14, symSize: 0x28C }
+...
