@@ -51,10 +51,9 @@ MatErreur mat_additionner(const Matrice *a, const Matrice *b,
     /* FOURNI : parcours de tous les coefficients de r. */
     for (int i = 0; i < r.nb_lignes; i++) {
         for (int j = 0; j < r.nb_colonnes; j++) {
-            /* (3.c) À COMPLÉTER : calculer la somme des coefficients
-             *       (i, j) de a et de b EN long long :
-             *         long long s = (long long)a->coef[i][j] + ... ;  */
-            long long s = 0;   /* ligne provisoire : à remplacer en (3.c) */
+            
+            long long s = 0; 
+            long long s = (long long)a->coef[i][j] + b->coef[i][j];
 
             if (!tient_dans_int(s)) {                    /* FOURNI */
                 mat_detruire(&r);
