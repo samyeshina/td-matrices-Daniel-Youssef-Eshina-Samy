@@ -62,10 +62,10 @@ MatErreur mat_allouer(Matrice *res, int nb_lignes, int nb_colonnes)
 
 void mat_detruire(Matrice *m)
 {
-    if (m == NULL)                 /* FOURNI */
+    if (m == NULL)                 
         return;
 
-          */
+          
     if (m->coef != NULL) {
       for (int i = 0; i < m->nb_lignes; i++)
       free(m->coef[i]);
