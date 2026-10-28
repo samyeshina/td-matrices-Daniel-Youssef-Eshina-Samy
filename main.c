@@ -77,7 +77,8 @@ int main(int argc, char *argv[])
     if (charger(argv[2], &a) != MAT_OK || charger(argv[3], &b) != MAT_OK)
         goto nettoyage;
 
-    /* (4.a) À COMPLÉTER : afficher A et B avec mat_afficher.          */
+    mat_afficher("A", &a);
+    mat_afficher("B", &b);
 
 
     /* (4.b) À COMPLÉTER : calculer r.
