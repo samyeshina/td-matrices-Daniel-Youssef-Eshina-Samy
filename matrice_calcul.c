@@ -52,7 +52,7 @@ MatErreur mat_additionner(const Matrice *a, const Matrice *b,
     for (int i = 0; i < r.nb_lignes; i++) {
         for (int j = 0; j < r.nb_colonnes; j++) {
             
-            long long s = 0; 
+            
             long long s = (long long)a->coef[i][j] + b->coef[i][j];
 
             if (!tient_dans_int(s)) {                    /* FOURNI */
