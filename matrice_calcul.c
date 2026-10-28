@@ -90,18 +90,15 @@ MatErreur mat_multiplier(const Matrice *a, const Matrice *b,
         for (int j = 0; j < r.nb_colonnes; j++) {
             long long s = 0;
 
-            /* (3.g) À COMPLÉTER : boucle sur k, de 0 à a->nb_colonnes - 1,
-             *       qui ajoute à s le produit a(i,k) x b(k,j) :
-             *
-             *   for (int k = 0; k < a->nb_colonnes; k++) {
-             *       long long p = (long long)a->coef[i][k] * b->coef[k][j];
-             *       if ((p > 0 && s > LLONG_MAX - p)
-             *           || (p < 0 && s < LLONG_MIN - p)) {
-             *           mat_detruire(&r);
-             *           return MAT_ERR_DEPASSEMENT;
-             *       }
-             *       s += p;
-             *   }                                                     */
+            for (int k = 0; k < a->nb_colonnes; k++) {
+    long long p = (long long)a->coef[i][k] * b->coef[k][j];
+    if ((p > 0 && s > LLONG_MAX - p)
+        || (p < 0 && s < LLONG_MIN - p)) {
+        mat_detruire(&r);
+        return MAT_ERR_DEPASSEMENT;
+    }
+    s += p;
+}
 
             if (!tient_dans_int(s)) {                    /* FOURNI */
                 mat_detruire(&r);
