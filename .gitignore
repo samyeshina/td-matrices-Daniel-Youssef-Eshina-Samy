@@ -6,3 +6,4 @@ demo_matrices
 .vscode/
 .idea/
 __MACOSX/
+*.exe
