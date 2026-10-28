@@ -61,12 +61,21 @@ MatErreur mat_ecrire(FILE *f, const Matrice *m)
     if (fprintf(f, "%d %d\n", m->nb_lignes, m->nb_colonnes) < 0)
         return MAT_ERR_ECRITURE;
 
-    /* (2.b) À COMPLÉTER : pour chaque ligne i de la matrice :
-     *         - écrire les coefficients séparés par UN espace :
-     *             le premier (j == 0) avec "%d", les autres avec " %d" ;
-     *         - terminer la ligne avec fputc('\n', f) ;
-     *         - si un fprintf renvoie un nombre < 0, ou si fputc
-     *           renvoie EOF : return MAT_ERR_ECRITURE;               */
+    /* (2.b) */
+    for (int i = 0; i < m->nb_lignes; i++) {
+        for (int j = 0; j < m->nb_colonnes; j++) {
+             if (j == 0) {
+                if (fprintf(f, "%d", m->coef[i][j]) < 0)
+                   return MAT_ERR_ECRITURE;
+                   }
+                 else {
+                if (fprintf(f, " %d", m->coef[i][j]) < 0)
+                   return MAT_ERR_ECRITURE;
+        }
+    }
+    if (fputc('\n', f) == EOF)
+        return MAT_ERR_ECRITURE;
+}
 
 
     /* FOURNI : forcer l'écriture du tampon et détecter une erreur. */
@@ -92,10 +101,10 @@ MatErreur mat_lire(FILE *f, Matrice *res)
     if (err != MAT_OK)
         return err;
 
-    /* (2.c) À COMPLÉTER : si nb_lignes ou nb_colonnes n'est pas compris
-     *       entre 1 et MAT_DIM_MAX, renvoyer MAT_ERR_FORMAT
-     *       (c'est le contenu du fichier qui est faux).               */
-
+    /* (2.c) À COMPLÉTER  */
+    if (nb_lignes < 1 || nb_lignes > MAT_DIM_MAX ||nb_colonnes < 1 || nb_colonnes > MAT_DIM_MAX) {
+       return MAT_ERR_FORMAT;
+       }
 
     /* (2.d) À COMPLÉTER : déclarer une matrice LOCALE et l'allouer :
      *         Matrice tmp;
