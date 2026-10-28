@@ -67,8 +67,10 @@ MatErreur mat_allouer(Matrice *res, int nb_lignes, int nb_colonnes)
      *       (trois affectations : coef, nb_lignes, nb_colonnes)
      *       et renvoyer MAT_OK.                                        */
 
-    free(coef);                  /* ligne provisoire : à supprimer en (1.e) */
-    return MAT_ERR_LECTURE;      /* ligne provisoire : à remplacer en (1.e) */
+   res->coef = coef;
+   res->nb_lignes = nb_lignes;
+   res->nb_colonnes = nb_colonnes;
+   return MAT_OK;
 }
 
 void mat_detruire(Matrice *m)
