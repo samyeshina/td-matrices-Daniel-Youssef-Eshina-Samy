@@ -51,6 +51,9 @@ void mat_afficher(const char *nom, const Matrice *m)
               }
     putchar('\n');
     }
+}
+
+
 
 MatErreur mat_ecrire(FILE *f, const Matrice *m)
 {
