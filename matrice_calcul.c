@@ -79,9 +79,11 @@ MatErreur mat_multiplier(const Matrice *a, const Matrice *b,
     return MAT_ERR_DIMENSIONS;
 
 
-    /* (3.f) À COMPLÉTER : allouer r de dimensions
-     *       (lignes de a) x (colonnes de b).                          */
+                         
     Matrice r = MATRICE_VIDE;
+    err = mat_allouer(&r, a->nb_lignes, b->nb_colonnes);
+    if (err != MAT_OK)
+    return err;
 
 
     for (int i = 0; i < r.nb_lignes; i++) {              /* FOURNI */
