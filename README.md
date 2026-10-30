@@ -231,6 +231,7 @@ Trois : ‘a’ et ‘b’ (lues avec succès) et ‘r’ (calculée avec succè
 
 ## 5. Vérifications mémoire
 
+### Vérifications mémoire de l'exercice 1
 valgrind --leak-check=full ./test_ex1 
 
 ==5184== Memcheck, a memory error detector
@@ -271,6 +272,7 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex1
 ==5184== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
+### Vérifications mémoire de l'exercice 2
 valgrind --leak-check=full ./test_ex2 
 
 ==5825== Memcheck, a memory error detector
@@ -317,6 +319,7 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex2
 ==5825== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
+### Vérifications mémoire de l'exercice 1
 valgrind --leak-check=full ./test_ex3 
 
 ==6460== Memcheck, a memory error detector
@@ -355,19 +358,7 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex3
 ==6460== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+### Vérifications mémoire de demo_matrices
 valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
 ==7332== Memcheck, a memory error detector
 ==7332== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
