@@ -319,7 +319,7 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex2
 ==5825== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
-### Vérifications mémoire de l'exercice 1
+### Vérifications mémoire de l'exercice 3
 valgrind --leak-check=full ./test_ex3 
 
 ==6460== Memcheck, a memory error detector
