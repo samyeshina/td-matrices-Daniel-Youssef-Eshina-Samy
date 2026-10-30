@@ -231,6 +231,176 @@ Trois : ‘a’ et ‘b’ (lues avec succès) et ‘r’ (calculée avec succè
 
 ## 5. Vérifications mémoire
 
+valgrind --leak-check=full ./test_ex1 
+
+==5184== Memcheck, a memory error detector
+==5184== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==5184== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==5184== Command: ./test_ex1
+==5184== 
+=== Exercice 1 : matrice.c ===
+[OK]    (1.a) message pour MAT_ERR_DIMENSIONS
+[OK]    (1.a) message pour MAT_ERR_DEPASSEMENT
+[OK]    (1.b) une matrice 1 x 2 est valide
+[OK]    (1.b) NULL n'est pas valide
+[OK]    (1.b) MATRICE_VIDE n'est pas valide
+[OK]    (1.b) une matrice de 0 ligne n'est pas valide
+=== Exercice 1 : matrice_alloc.c ===
+[OK]    (1.c) mat_allouer refuse 0 ligne
+[OK]    (1.c) mat_allouer refuse -2 colonnes
+[OK]    (1.c) mat_allouer refuse une dimension > MAT_DIM_MAX
+[OK]    (1.e) mat_allouer(&m, 3, 4) renvoie MAT_OK
+[OK]    (1.e) m a 3 lignes et 4 colonnes
+[OK]    (1.d) tous les coefficients valent 0
+[OK]    (1.f) apres mat_detruire, m est vide
+[OK]    (1.f) un second mat_detruire est sans danger
+[OK]    (1.f) mat_detruire(NULL) ne plante pas
+=== Exercice 1 : echecs d'allocation simules ===
+[OK]    (1.d) chaque echec renvoie MAT_ERR_ALLOCATION et laisse *res vide
+
+Bilan : 16 / 16 verifications reussies.
+Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex1
+==5184== 
+==5184== HEAP SUMMARY:
+==5184==     in use at exit: 0 bytes in 0 blocks
+==5184==   total heap usage: 11 allocs, 11 frees, 1,228 bytes allocated
+==5184== 
+==5184== All heap blocks were freed -- no leaks are possible
+==5184== 
+==5184== For lists of detected and suppressed errors, rerun with: -s
+==5184== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+valgrind --leak-check=full ./test_ex2 
+
+==5825== Memcheck, a memory error detector
+==5825== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==5825== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==5825== Command: ./test_ex2
+==5825== 
+=== Exercice 2 : affichage (verification visuelle) ===
+M (4 x 3) :
+        1        2        3
+        4        5        6
+        7        8        9
+       10       11       12
+(2.a) Vous devez voir ci-dessus 4 lignes : 1 2 3 / 4 5 6 / 7 8 9 / 10 11 12
+=== Exercice 2 : ecriture ===
+[OK]    ouverture de test_ex2_sortie.txt en ecriture
+[OK]    (2.b) mat_ecrire renvoie MAT_OK
+[OK]    (2.b) le fichier contient exactement le format attendu
+[OK]    (2.b) mat_ecrire refuse une matrice vide
+=== Exercice 2 : relecture ===
+[OK]    (2.f) mat_lire relit le fichier : MAT_OK
+[OK]    (2.e) la matrice relue est identique
+[OK]    (2.e) espaces et sauts de ligne en trop sont toleres
+=== Exercice 2 : fichiers incorrects ===
+[OK]    (2.c) fichier vide
+[OK]    (2.c) dimension nulle
+[OK]    (2.c) dimension negative
+[OK]    (2.e) coefficient manquant
+[OK]    (2.e) donnee non numerique
+[OK]    (2.e) entier trop grand pour un int
+=== Exercice 2 : echec d'allocation simule ===
+[OK]    (2.d) mat_lire renvoie MAT_ERR_ALLOCATION proprement
+
+Bilan : 14 / 14 verifications reussies.
+Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex2
+==5825== 
+==5825== HEAP SUMMARY:
+==5825==     in use at exit: 0 bytes in 0 blocks
+==5825==   total heap usage: 51 allocs, 51 frees, 60,728 bytes allocated
+==5825== 
+==5825== All heap blocks were freed -- no leaks are possible
+==5825== 
+==5825== For lists of detected and suppressed errors, rerun with: -s
+==5825== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+valgrind --leak-check=full ./test_ex3 
+
+==6460== Memcheck, a memory error detector
+==6460== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==6460== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==6460== Command: ./test_ex3
+==6460== 
+=== Exercice 3 : addition ===
+[OK]    (3.a) (2 x 3) + (3 x 2) : MAT_ERR_DIMENSIONS
+[OK]    (3.d) (2 x 3) + (2 x 3) : MAT_OK
+[OK]    (3.c) a + b est correct
+[OK]    a et b n'ont pas ete modifiees
+[OK]    (3.b) le resultat possede sa propre memoire
+[OK]    (3.c) INT_MAX + 1 : MAT_ERR_DEPASSEMENT
+=== Exercice 3 : multiplication ===
+[OK]    (3.e) (2 x 3) x (2 x 3) : MAT_ERR_DIMENSIONS
+[OK]    (3.h) (2 x 3) x (3 x 2) : MAT_OK
+[OK]    (3.g) a x c = (58 64 / 139 154)
+[OK]    (3.f) (3 x 2) x (2 x 3) donne une matrice 3 x 3
+[OK]    a et c n'ont pas ete modifiees
+[OK]    (3.g) 2 x 10^10 depasse INT_MAX : MAT_ERR_DEPASSEMENT
+=== Exercice 3 : cas particuliers ===
+[OK]    resultat = entree refuse, a reste intacte
+[OK]    (3.f) echec d'allocation : MAT_ERR_ALLOCATION, r vide
+
+Bilan : 14 / 14 verifications reussies.
+Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex3
+==6460== 
+==6460== HEAP SUMMARY:
+==6460==     in use at exit: 0 bytes in 0 blocks
+==6460==   total heap usage: 37 allocs, 37 frees, 1,412 bytes allocated
+==6460== 
+==6460== All heap blocks were freed -- no leaks are possible
+==6460== 
+==6460== For lists of detected and suppressed errors, rerun with: -s
+==6460== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
+==7332== Memcheck, a memory error detector
+==7332== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==7332== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7332== Command: ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
+==7332== 
+A (4 x 3) :
+       25       48       84
+       15       33       11
+       45       88       10
+        0       12       -5
+B (4 x 3) :
+        1        2        3
+        4        5        6
+        7        8        9
+       10       11       12
+R = A + B (4 x 3) :
+       26       50       87
+       19       38       17
+       52       96       19
+       10       23        7
+Résultat enregistré dans "R.txt".
+==7332== 
+==7332== HEAP SUMMARY:
+==7332==     in use at exit: 0 bytes in 0 blocks
+==7332==   total heap usage: 22 allocs, 22 frees, 14,968 bytes allocated
+==7332== 
+==7332== All heap blocks were freed -- no leaks are possible
+==7332== 
+==7332== For lists of detected and suppressed errors, rerun with: -s
+==7332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
 ## 6. Démonstration finale
 
 ### Scénarios de test de ‘demo_matrices’
