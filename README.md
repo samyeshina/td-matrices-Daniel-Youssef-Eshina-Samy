@@ -358,38 +358,8 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex3
 ==6460== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
-### Vérifications mémoire de demo_matrices
-valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
-==7332== Memcheck, a memory error detector
-==7332== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==7332== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==7332== Command: ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
-==7332== 
-A (4 x 3) :
-       25       48       84
-       15       33       11
-       45       88       10
-        0       12       -5
-B (4 x 3) :
-        1        2        3
-        4        5        6
-        7        8        9
-       10       11       12
-R = A + B (4 x 3) :
-       26       50       87
-       19       38       17
-       52       96       19
-       10       23        7
-Résultat enregistré dans "R.txt".
-==7332== 
-==7332== HEAP SUMMARY:
-==7332==     in use at exit: 0 bytes in 0 blocks
-==7332==   total heap usage: 22 allocs, 22 frees, 14,968 bytes allocated
-==7332== 
-==7332== All heap blocks were freed -- no leaks are possible
-==7332== 
-==7332== For lists of detected and suppressed errors, rerun with: -s
-==7332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
 
 
 ## 6. Démonstration finale
@@ -487,7 +457,7 @@ Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2)
 ==7837== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
-Une phrase par scénario, par exemple pour le cas d’erreur : « Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
+ Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
 
 ### La vérification automatique GitHub Actions
 (valgrind sur les trois tests et sur `demo_matrices`) est verte : aucune fuite
@@ -495,8 +465,8 @@ mémoire ni accès invalide n'est signalé.
 
 | # | Commande | Comportement observé | Code |
 |---|----------|----------------------|------|
-| 1 | `add A.txt B.txt R.txt` | A, B et R = A + B sont affichées, puis « R├⌐sultat enregistr├⌐ dans "R.txt".».
 
+| 1 |  `add A.txt B.txt R.txt` | A B (3 x 2) , R = A + B puis «R├⌐sultat enregistr├⌐ dans "R.txt».
  | 2 | `mul A.txt C.txt R2.txt` | A (4 x 3) et C (3 x 2) sont affichées, R = A x B est de dimensions 4 x 2 puis «R├⌐sultat enregistr├⌐ dans "R2.txt».
 
 | 3 | `add A.txt C.txt R3.txt` | affiche les matrices A et B puis Message Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2). Aucun fichier n'est créé. 
