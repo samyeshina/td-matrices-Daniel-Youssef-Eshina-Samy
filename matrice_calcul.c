@@ -1,7 +1,6 @@
 /*
  * matrice_calcul.c -- Opérations arithmétiques sur les matrices.
  *
- * FICHIER À COMPLÉTER (exercice 3, étapes 3.a à 3.g).
  */
 #include <limits.h>
 #include <stddef.h>
