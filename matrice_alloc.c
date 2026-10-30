@@ -72,6 +72,5 @@ void mat_detruire(Matrice *m)
       free(m->coef);
 }
 
-
     *m = MATRICE_VIDE;   /* FOURNI : état sûr après destruction (R6) */
 }
