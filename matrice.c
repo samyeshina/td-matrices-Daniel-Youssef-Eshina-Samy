@@ -1,7 +1,6 @@
 /*
  * matrice.c -- Fonctions utilitaires communes à tous les modules.
  *
- * FICHIER À COMPLÉTER (exercice 1, étapes 1.a et 1.b).
  */
 #include <stddef.h>
 #include "matrice.h"
