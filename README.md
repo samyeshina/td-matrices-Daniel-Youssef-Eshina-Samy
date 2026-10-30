@@ -245,8 +245,8 @@ mémoire ni accès invalide n'est signalé.
 
 | # | Commande | Comportement observé | Code |
 |---|----------|----------------------|------|
-| 1 | `add A.txt B.txt R.txt` | A, B et R = A + B sont affichées, puis « R├⌐sultat enregistr├⌐ dans "R.txt".».
 
+ | 1 |`add A.txt B.txt R.txt` | A, B et R = A + B sont affichées, puis « Résultat enregistré dans "R.txt" ». `R.txt` 
  | 2 | `mul A.txt C.txt R2.txt` | A (4 x 3) et C (3 x 2) sont affichées, R = A x B est de dimensions 4 x 2 puis «R├⌐sultat enregistr├⌐ dans "R2.txt».
 
 | 3 | `add A.txt C.txt R3.txt` | affiche les matrices A et B puis Message Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2). Aucun fichier n'est créé. 
@@ -270,8 +270,8 @@ mémoire ni accès invalide n'est signalé.
 ## 7. Bilan et difficultés
 Nous estimons avoir effectué une bonne répartition du travail (50-50).
 Répartition du travail:
-Daniel : 1a,1b + correction de l’exercice 1, 3, 4
-Eshina : 1c-1f, 2 ,4
+Daniel : 1a,1b + correction de l’exercice 1, exercise 3, exercise 4
+Eshina : 1c-1f, exercise 2 ,exercise 4
 
 Nous avons eu recours à des tuto youtube pour apprendre à utiliser github proprement et la complétion des codes ayant été faite sur visual studio code, cela nous à faciliter les débugage. Nos erreurs les plus fréquentes étaient l’oubli d'une accolade ‘}’ ou des fautes de frappe (par exemple rse au lieu de res).
 
