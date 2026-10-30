@@ -393,6 +393,7 @@ Résultat enregistré dans "R.txt".
 
 
 ## 6. Démonstration finale
+
 ### Scénario 1 : addition, sans erreur 
 valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
 ==7332== Memcheck, a memory error detector
@@ -426,7 +427,7 @@ Résultat enregistré dans "R.txt".
 ==7332== For lists of detected and suppressed errors, rerun with: -s
 ==7332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
-#### Scénario 2 : multiplication, sans erreur 
+### Scénario 2 : multiplication, sans erreur 
 valgrind --leak-check=full ./demo_matrices mul donnees/A.txt donnees/C.txt R2.txt
 ==8869== Memcheck, a memory error detector
 ==8869== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
@@ -488,6 +489,32 @@ Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2)
 
 Une phrase par scénario, par exemple pour le cas d’erreur : « Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
 
+### La vérification automatique GitHub Actions
+(valgrind sur les trois tests et sur `demo_matrices`) est verte : aucune fuite
+mémoire ni accès invalide n'est signalé.
+
+| # | Commande | Comportement observé | Code |
+|---|----------|----------------------|------|
+| 1 | `add A.txt B.txt R.txt` | A, B et R = A + B sont affichées, puis « R├⌐sultat enregistr├⌐ dans "R.txt".».
+
+ | 2 | `mul A.txt C.txt R2.txt` | A (4 x 3) et C (3 x 2) sont affichées, R = A x B est de dimensions 4 x 2 puis «R├⌐sultat enregistr├⌐ dans "R2.txt».
+
+| 3 | `add A.txt C.txt R3.txt` | affiche les matrices A et B puis Message Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2). Aucun fichier n'est créé. 
+
+| 4 | `mul A.txt B.txt R3.txt` | affiche les matrices A et B puis Même erreur, Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 4 x 3)
+
+| 5 | `add absent.txt B.txt R3.txt` | Erreur : impossible d'ouvrir "absent.txt" : No such file or directory
+
+| 6 | `add invalide.txt B.txt R3.txt` |Erreur : lecture de "donnees\invalide.txt" : fichier mal form├⌐
+
+| 7 | `add tronque.txt B.txt R3.txt` |Erreur : lecture de "donnees\tronque.txt" : fichier mal form├⌐
+
+| 8 | `add A.txt B.txt dossier_inexistant\R.txt` | Le calcul réussit et A, B, R sont affichées, puis Erreur : impossible de cr├⌐er "dossier_inexistant\R.txt" : No such file or directory
+
+| 10 | `add A.txt` ou `foo a b c` | Message d'usage Usage : demo_matrices <add|mul> <fichier_A> <fichier_B> <fichier_R>
+
+**Bilan des tests fournis.** `test_ex1` : 16 / 16, `test_ex2` : 14 / 14,
+`test_ex3` : 14 / 14, sans aucun avertissement de compilation.
 
 
 
