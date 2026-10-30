@@ -1,6 +1,6 @@
 # Compte rendu — TD Stockage de matrices en C
 
-Membres:YOUSSEF Daniel, SAMY Eshina - TD 1 STI 3A
+Membres : YOUSSEF Daniel, SAMY Eshina - TD 1 STI 3A
 
 ## 1. En-tête
 TD 1 - STI 3A
