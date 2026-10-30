@@ -1,10 +1,9 @@
 /*
  * main.c -- Programme de démonstration de la bibliothèque de matrices.
  *
- * FICHIER À COMPLÉTER (exercice 4, étapes 4.a à 4.d).
- *
  * Usage : ./demo_matrices <add|mul> <fichier_A> <fichier_B> <fichier_R>
  */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
