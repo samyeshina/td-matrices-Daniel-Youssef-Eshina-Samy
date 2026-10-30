@@ -393,39 +393,102 @@ Résultat enregistré dans "R.txt".
 
 
 ## 6. Démonstration finale
+### Scénario 1 : addition, sans erreur 
+valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
+==7332== Memcheck, a memory error detector
+==7332== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==7332== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7332== Command: ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
+==7332== 
+A (4 x 3) :
+       25       48       84
+       15       33       11
+       45       88       10
+        0       12       -5
+B (4 x 3) :
+        1        2        3
+        4        5        6
+        7        8        9
+       10       11       12
+R = A + B (4 x 3) :
+       26       50       87
+       19       38       17
+       52       96       19
+       10       23        7
+Résultat enregistré dans "R.txt".
+==7332== 
+==7332== HEAP SUMMARY:
+==7332==     in use at exit: 0 bytes in 0 blocks
+==7332==   total heap usage: 22 allocs, 22 frees, 14,968 bytes allocated
+==7332== 
+==7332== All heap blocks were freed -- no leaks are possible
+==7332== 
+==7332== For lists of detected and suppressed errors, rerun with: -s
+==7332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
-### Scénarios de test de ‘demo_matrices’
+#### Scénario 2 : multiplication, sans erreur 
+valgrind --leak-check=full ./demo_matrices mul donnees/A.txt donnees/C.txt R2.txt
+==8869== Memcheck, a memory error detector
+==8869== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==8869== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==8869== Command: ./demo_matrices mul donnees/A.txt donnees/C.txt R2.txt
+==8869== 
+A (4 x 3) :
+       25       48       84
+       15       33       11
+       45       88       10
+        0       12       -5
+B (3 x 2) :
+        1        0
+        0        1
+        2       -1
+R = A x B (4 x 2) :
+      193      -36
+       37       22
+       65       78
+      -10       17
+Résultat enregistré dans "R2.txt".
+==8869== 
+==8869== HEAP SUMMARY:
+==8869==     in use at exit: 0 bytes in 0 blocks
+==8869==   total heap usage: 21 allocs, 21 frees, 14,920 bytes allocated
+==8869== 
+==8869== All heap blocks were freed -- no leaks are possible
+==8869== 
+==8869== For lists of detected and suppressed errors, rerun with: -s
+==8869== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
-Les scénarios du sujet ont été exécutés avec le programme compilé par
-`gcc -std=c11 -Wall -Wextra -Wpedantic -g`. Le code de sortie a été lu avec
-`echo %errorlevel%` (Windows). 
+### Scénario 3 : avec erreur 
+valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/C.txt R3.txt
+==7837== Memcheck, a memory error detector
+==7837== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==7837== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7837== Command: ./demo_matrices add donnees/A.txt donnees/C.txt R3.txt
+==7837== 
+A (4 x 3) :
+       25       48       84
+       15       33       11
+       45       88       10
+        0       12       -5
+B (3 x 2) :
+        1        0
+        0        1
+        2       -1
+Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2)
+==7837== 
+==7837== HEAP SUMMARY:
+==7837==     in use at exit: 0 bytes in 0 blocks
+==7837==   total heap usage: 14 allocs, 14 frees, 10,288 bytes allocated
+==7837== 
+==7837== All heap blocks were freed -- no leaks are possible
+==7837== 
+==7837== For lists of detected and suppressed errors, rerun with: -s
+==7837== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
-La vérification automatique GitHub Actions
-(valgrind sur les trois tests et sur `demo_matrices`) est verte : aucune fuite
-mémoire ni accès invalide n'est signalé.
 
-| # | Commande | Comportement observé | Code |
-|---|----------|----------------------|------|
+Une phrase par scénario, par exemple pour le cas d’erreur : « Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
 
- | 1 |`add A.txt B.txt R.txt` | A, B et R = A + B sont affichées, puis « Résultat enregistré dans "R.txt" ». `R.txt` 
- | 2 | `mul A.txt C.txt R2.txt` | A (4 x 3) et C (3 x 2) sont affichées, R = A x B est de dimensions 4 x 2 puis «R├⌐sultat enregistr├⌐ dans "R2.txt».
 
-| 3 | `add A.txt C.txt R3.txt` | affiche les matrices A et B puis Message Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2). Aucun fichier n'est créé. 
-
-| 4 | `mul A.txt B.txt R3.txt` | affiche les matrices A et B puis Même erreur, Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 4 x 3)
-
-| 5 | `add absent.txt B.txt R3.txt` | Erreur : impossible d'ouvrir "absent.txt" : No such file or directory
-
-| 6 | `add invalide.txt B.txt R3.txt` |Erreur : lecture de "donnees\invalide.txt" : fichier mal form├⌐
-
-| 7 | `add tronque.txt B.txt R3.txt` |Erreur : lecture de "donnees\tronque.txt" : fichier mal form├⌐
-
-| 8 | `add A.txt B.txt dossier_inexistant\R.txt` | Le calcul réussit et A, B, R sont affichées, puis Erreur : impossible de cr├⌐er "dossier_inexistant\R.txt" : No such file or directory
-
-| 10 | `add A.txt` ou `foo a b c` | Message d'usage Usage : demo_matrices <add|mul> <fichier_A> <fichier_B> <fichier_R>
-
-**Bilan des tests fournis.** `test_ex1` : 16 / 16, `test_ex2` : 14 / 14,
-`test_ex3` : 14 / 14, sans aucun avertissement de compilation.
 
 
 ## 7. Bilan et difficultés
