@@ -1,9 +1,11 @@
 *.o
+*.exe
+*.dSYM/
 test_ex1
 test_ex2
 test_ex3
 demo_matrices
-.vscode/
-.idea/
-__MACOSX/
-*.exe
+test_ex2_sortie.txt
+R.txt
+R2.txt
+R3.txt
