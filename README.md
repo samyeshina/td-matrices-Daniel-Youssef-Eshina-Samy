@@ -71,6 +71,8 @@ flowchart LR
     calcul_c --> alloc_h
     alloc_c[matrice_alloc.c] --> alloc_h
     mat_c[matrice.c] --> mat_h
+
+    mat_c ~~~ io_h
 ```
 
     
