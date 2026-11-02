@@ -108,6 +108,17 @@ Gestion de l'échec partiel d'allocation : Dans mat_allouer, si une allocation �
 Détection des dépassements de capacité (overflow) : Les calculs sont effectués en long long (64 bits) puis comparés à INT_MIN et INT_MAX avant stockage. Cela permet de bloquer les dépassements d'entiers signés avant qu'ils ne provoquent un comportement indéfini.
 
 ### Commande de compilation
+Exercice 1 
+gcc -std=c11 -Wall -Wextra -Wpedantic -g -DMAT_TEST_ALLOC test_ex1.c matrice.c matrice_alloc.c -o test_ex1
+
+Exercce 2
+gcc -std=c11 -Wall -Wextra -Wpedantic -g -DMAT_TEST_ALLOC test_ex2.c matrice.c matrice_alloc.c matrice_io.c -o test_ex2
+
+Exercice 3
+gcc -std=c11 -Wall -Wextra -Wpedantic -g -DMAT_TEST_ALLOC test_ex3.c matrice.c matrice_alloc.c matrice_calcul.c -o test_ex3
+
+Exercice 4
+gcc -std=c11 -Wall -Wextra -Wpedantic -g main.c matrice.c matrice_alloc.c matrice_io.c matrice_calcul.c -o demo_matrices
 
 
 
