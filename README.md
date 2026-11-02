@@ -518,10 +518,7 @@ Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2)
 Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
 
 ### La vérification automatique GitHub Actions
-(valgrind sur les trois tests et sur `demo_matrices`) est verte : aucune fuite
-mémoire ni accès invalide n'est signalé.
-
-### Intégration Continue (GitHub Actions)
+(valgrind sur les trois tests et sur `demo_matrices`) est verte : aucune fuite mémoire ni accès invalide n'est signalé.
 
 La vérification automatique sur GitHub Actions s'exécute à chaque `push` sur la branche `main`.
 
@@ -550,7 +547,7 @@ Eshina : 1c-1f, exercise 2 ,exercise 4
 
 Nous avons eu recours à des tutorial sur youtube pour apprendre à utiliser github proprement et la complétion des codes ayant été faite sur visual studio code, cela nous à faciliter les débugage. Nos erreurs les plus fréquentes étaient l’oubli d'une accolade ‘}’ ou des fautes de frappe (par exemple rse au lieu de res).
 
-Une utilisation de l’ia gemini et claude pour trouver des alternatives à Valgrind sur Windows et MacOs car nous voulions également tester les modules sur nos ordinateurs portables respectifs. Nous avons également utiliser les IA pour corriger certaines erreurs lors de l'écriture du README (comme des erreurs sur l'écriture du diagramme mermaid) et pour améliorer notre mise en page.
+Une utilisation de l’ia gemini et claude pour trouver des alternatives à Valgrind sur Windows et MacOs car nous voulions également tester les modules sur nos ordinateurs portables respectifs. Nous avons également utiliser les IA pour corriger certaines erreurs lors de l'écriture du README (comme des erreurs sur l'écriture du diagramme mermaid et le tableau sur la vérification automatique) et pour améliorer notre mise en page.
 
 ## 8. Annexe
 Code que nous avons écrit, commenté
