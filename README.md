@@ -35,96 +35,37 @@ L'ensemble des exercices 1 à 4 est validé et fonctionnel. Les trois programmes
 
 ## Schéma des modules
 
-Qui appelle qui : une flèche `X --> Y` signifie « X utilise les fonctions de Y ».
-
 ```mermaid
 flowchart TD
-    main["main.c<br/><small>programme demo_matrices</small>"]
-
-    subgraph lib["Bibliothèque"]
-        io["matrice_io<br/><small>lire, écrire, afficher</small>"]
-        calcul["matrice_calcul<br/><small>additionner, multiplier</small>"]
-        alloc["matrice_alloc<br/><small>allouer, détruire</small>"]
-        mat["matrice<br/><small>type Matrice, erreurs, outils</small>"]
-    end
-
-    main --> io
-    main --> calcul
-    main --> alloc
-
+    main[main.c] --> io[matrice_io]
+    main --> calcul[matrice_calcul]
+    main --> alloc[matrice_alloc]
     io --> alloc
-    io --> mat
+    io --> mat[matrice]
     calcul --> alloc
     calcul --> mat
     alloc --> mat
-
-    classDef prog fill:#E1F5EE,stroke:#0F6E56,color:#085041;
-    classDef mod fill:#EEEDFE,stroke:#534AB7,color:#3C3489;
-    class main prog;
-    class io,calcul,alloc,mat mod;
 ```
 
 ## Graphe des inclusions
 
-Une flèche `X --> Y` signifie « X contient `#include Y` ».
-
 ```mermaid
 flowchart LR
-    subgraph C["Fichiers .c"]
-        main_c["main.c"]
-        io_c["matrice_io.c"]
-        calcul_c["matrice_calcul.c"]
-        alloc_c["matrice_alloc.c"]
-        mat_c["matrice.c"]
-    end
-
-    subgraph H["En-têtes du projet"]
-        io_h["matrice_io.h"]
-        calcul_h["matrice_calcul.h"]
-        alloc_h["matrice_alloc.h"]
-        mat_h["matrice.h"]
-    end
-
-    subgraph STD["Bibliothèque standard"]
-        stdio["#lt;stdio.h#gt;"]
-        stdlib["#lt;stdlib.h#gt;"]
-        errno["#lt;errno.h#gt;"]
-        limits["#lt;limits.h#gt;"]
-        stddef["#lt;stddef.h#gt;"]
-    end
-
-    main_c --> mat_h
-    main_c --> alloc_h
-    main_c --> io_h
-    main_c --> calcul_h
+    main_c[main.c] --> mat_h[matrice.h]
+    main_c --> alloc_h[matrice_alloc.h]
+    main_c --> io_h[matrice_io.h]
+    main_c --> calcul_h[matrice_calcul.h]
 
     alloc_h --> mat_h
     io_h --> mat_h
-    io_h --> stdio
     calcul_h --> mat_h
 
-    io_c --> io_h
+    io_c[matrice_io.c] --> io_h
     io_c --> alloc_h
-    io_c --> stdio
-    io_c --> stdlib
-    io_c --> errno
-
-    calcul_c --> calcul_h
+    calcul_c[matrice_calcul.c] --> calcul_h
     calcul_c --> alloc_h
-    calcul_c --> limits
-
-    alloc_c --> alloc_h
-    alloc_c --> stdlib
-
-    mat_c --> mat_h
-    mat_c --> stddef
-
-    classDef src fill:#F1EFE8,stroke:#5F5E5A,color:#444441;
-    classDef hdr fill:#EEEDFE,stroke:#534AB7,color:#3C3489;
-    classDef std fill:#FAECE7,stroke:#993C1D,color:#712B13;
-    class main_c,io_c,calcul_c,alloc_c,mat_c src;
-    class io_h,calcul_h,alloc_h,mat_h hdr;
-    class stdio,stdlib,errno,limits,stddef std;
+    alloc_c[matrice_alloc.c] --> alloc_h
+    mat_c[matrice.c] --> mat_h
 ```
 
 
