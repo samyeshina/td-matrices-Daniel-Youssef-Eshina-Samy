@@ -49,6 +49,7 @@ flowchart TD
     calcul --> alloc
     calcul --> mat
     alloc --> mat
+    main --> mat
 ```
 
 ### Graphe des inclusions
