@@ -553,7 +553,7 @@ Eshina : 1c-1f, exercise 2 ,exercise 4
 
 Nous avons eu recours à des tutorial sur youtube pour apprendre à utiliser github proprement et la complétion des codes ayant été faite sur visual studio code, cela nous à faciliter les débugage. Nos erreurs les plus fréquentes étaient l’oubli d'une accolade ‘}’ ou des fautes de frappe (par exemple rse au lieu de res).
 
-Une utilisation de l’ia gemini et claude pour trouver des alternatives à Valgrind sur Windows et MacOs car nous voulions également tester les modules sur nos ordinateurs portables respectifs. Nous avpns également utiliser les ia pour corriger certaines erreurs lors de l'écriture du README (comme des erreurs sur l'écriture du diagramme mermaid) et pour améliorer notre mise en page.
+Une utilisation de l’ia gemini et claude pour trouver des alternatives à Valgrind sur Windows et MacOs car nous voulions également tester les modules sur nos ordinateurs portables respectifs. Nous avons également utiliser les IA pour corriger certaines erreurs lors de l'écriture du README (comme des erreurs sur l'écriture du diagramme mermaid) et pour améliorer notre mise en page.
 
 ## 8. Annexe
 Code que nous avons écrit, commenté
