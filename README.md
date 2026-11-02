@@ -51,23 +51,14 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    main_c[main.c] --> mat_h[matrice.h]
-    main_c --> alloc_h[matrice_alloc.h]
-    main_c --> io_h[matrice_io.h]
+    main_c[main.c] --> io_h[matrice_io.h]
     main_c --> calcul_h[matrice_calcul.h]
+    main_c --> alloc_h[matrice_alloc.h]
 
-    alloc_h --> mat_h
-    io_h --> mat_h
+    io_h --> mat_h[matrice.h]
     calcul_h --> mat_h
-
-    io_c[matrice_io.c] --> io_h
-    io_c --> alloc_h
-    calcul_c[matrice_calcul.c] --> calcul_h
-    calcul_c --> alloc_h
-    alloc_c[matrice_alloc.c] --> alloc_h
-    mat_c[matrice.c] --> mat_h
+    alloc_h --> mat_h
 ```
-
 
 ### Schéma des modules : les 4 modules et le programme principal, avec qui appelle qui
 main.c / demo_main —> matrice_io, matrice_calcul, matrice_alloc
