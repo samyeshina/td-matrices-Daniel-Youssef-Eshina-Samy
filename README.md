@@ -32,11 +32,21 @@ L'ensemble des exercices 1 à 4 est validé et fonctionnel. Les trois programmes
 
 
 ## 3. Conception
-### Schéma des modules : les 4 modules et le programme principal, avec qui appelle qui
-main.c / demo_main —> matrice_io, matrice_calcul, matrice_alloc
-matrice_alloc —> matrice
-matrice_io & matrice_calcul —> matrice_alloc, matrice
 
+## Schéma des modules
+
+Qui appelle qui : une flèche `X --> Y` signifie « X utilise les fonctions de Y ».
+
+```mermaid
+flowchart TD
+    main["main.c<br/><small>programme demo_matrices</small>"]
+
+    subgraph lib["Bibliothèque"]
+        io["matrice_io<br/><small>lire, écrire, afficher</small>"]
+        calcul["matrice_calcul<br/><small>additionner, multiplier</small>"]
+        alloc["matrice_alloc<br/><small>allouer, détruire</small>"]
+        mat["matrice<br/><small>type Matrice, erreurs, outils</small>"]
+    end
 
     main --> io
     main --> calcul
@@ -44,28 +54,98 @@ matrice_io & matrice_calcul —> matrice_alloc, matrice
 
     io --> alloc
     io --> mat
-    
     calcul --> alloc
     calcul --> mat
-    
     alloc --> mat
-    
-### Graphe des inclusions : quel fichier inclut quel .h 
-    main --> io_h
-    main --> calcul_h
-    main --> alloc_h
-    main --> mat_h
+
+    classDef prog fill:#E1F5EE,stroke:#0F6E56,color:#085041;
+    classDef mod fill:#EEEDFE,stroke:#534AB7,color:#3C3489;
+    class main prog;
+    class io,calcul,alloc,mat mod;
+```
+
+## Graphe des inclusions
+
+Une flèche `X --> Y` signifie « X contient `#include Y` ».
+
+```mermaid
+flowchart LR
+    subgraph C["Fichiers .c"]
+        main_c["main.c"]
+        io_c["matrice_io.c"]
+        calcul_c["matrice_calcul.c"]
+        alloc_c["matrice_alloc.c"]
+        mat_c["matrice.c"]
+    end
+
+    subgraph H["En-têtes du projet"]
+        io_h["matrice_io.h"]
+        calcul_h["matrice_calcul.h"]
+        alloc_h["matrice_alloc.h"]
+        mat_h["matrice.h"]
+    end
+
+    subgraph STD["Bibliothèque standard"]
+        stdio["#lt;stdio.h#gt;"]
+        stdlib["#lt;stdlib.h#gt;"]
+        errno["#lt;errno.h#gt;"]
+        limits["#lt;limits.h#gt;"]
+        stddef["#lt;stddef.h#gt;"]
+    end
+
+    main_c --> mat_h
+    main_c --> alloc_h
+    main_c --> io_h
+    main_c --> calcul_h
+
+    alloc_h --> mat_h
+    io_h --> mat_h
+    io_h --> stdio
+    calcul_h --> mat_h
 
     io_c --> io_h
     io_c --> alloc_h
+    io_c --> stdio
+    io_c --> stdlib
+    io_c --> errno
+
     calcul_c --> calcul_h
     calcul_c --> alloc_h
-    alloc_c --> alloc_h
-    mat_c --> mat_h
+    calcul_c --> limits
 
-    io_h --> mat_h
-    calcul_h --> mat_h
-    alloc_h --> mat_h
+    alloc_c --> alloc_h
+    alloc_c --> stdlib
+
+    mat_c --> mat_h
+    mat_c --> stddef
+
+    classDef src fill:#F1EFE8,stroke:#5F5E5A,color:#444441;
+    classDef hdr fill:#EEEDFE,stroke:#534AB7,color:#3C3489;
+    classDef std fill:#FAECE7,stroke:#993C1D,color:#712B13;
+    class main_c,io_c,calcul_c,alloc_c,mat_c src;
+    class io_h,calcul_h,alloc_h,mat_h hdr;
+    class stdio,stdlib,errno,limits,stddef std;
+```
+
+
+### Schéma des modules : les 4 modules et le programme principal, avec qui appelle qui
+main.c / demo_main —> matrice_io, matrice_calcul, matrice_alloc
+matrice_alloc —> matrice
+matrice_io & matrice_calcul —> matrice_alloc, matrice
+
+    
+### Graphe des inclusions : quel fichier inclut quel .h 
+main.c —> "matrice.h"
+main.c —>"matrice_alloc.h"  ──> "matrice.h"
+main.c —>"matrice_io.h"  ──> "matrice.h", <stdio.h>
+main.c —>"matrice_calcul.h" ──> "matrice.h"
+
+
+matrice_io.c  ──> "matrice_io.h", "matrice_alloc.h", <stdio.h>, <stdlib.h>, <errno.h>
+matrice_calcul.c ──> "matrice_calcul.h", "matrice_alloc.h", <limits.h>
+matrice_alloc.c  ──> "matrice_alloc.h", <stdlib.h>
+matrice.c ──> "matrice.h", <stddef.h>
+
     
 ### Pourquoi le garde #ifndef est nécessaire?
 main.c inclut à la fois matrice.h, matrice_alloc.h, matrice_io.h et matrice_calcul.h. Sans la garde d'inclusion (#ifndef MATRICE_H / #define MATRICE_H / #endif), le préprocesseur recopiera la définition du type struct matrice et de la structure Matrice quatre fois consécutives dans main.c, ce qui provoquera une erreur de compilation pour redéfinition de type.
