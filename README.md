@@ -97,6 +97,8 @@ Détection des dépassements de capacité (overflow) : Les calculs sont effectu�
 ## 4. Réalisation
 ### Exercice 1 
 
+```
+
 samyeshina@Samys-MBP td_matrices % ./test_ex1
 === Exercice 1 : matrice.c ===
 [OK]    (1.a) message pour MAT_ERR_DIMENSIONS
@@ -119,6 +121,8 @@ samyeshina@Samys-MBP td_matrices % ./test_ex1
 [OK]    (1.d) chaque echec renvoie MAT_ERR_ALLOCATION et laisse *res vide
 Bilan : 16 / 16 verifications reussies.
 Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex1
+
+```
 
 
 #### Q3.1 Pourquoi mat_detruire prend-elle un Matrice * et non un Matrice ? Que se passerait-il,pour l’appelant, avec un passage par valeur ?
@@ -144,6 +148,8 @@ Nous avons essayé d'appeler deux fois mat_detruire(&a) à la suite, puis d'exé
 Pour que toutes les sorties anticipées (argument invalide, échec d'allocation) laissent *res dans un état défini et sûr (R3). Sans cela, *res pourrait contenir une valeur indéterminée (variable non initialisée) ou l'ancienne matrice de l'appelant.
 
 ### Exercice 2
+
+```
 samyeshina@Samys-MacBook-Pro td_matrices % ./test_ex2
 === Exercice 2 : affichage (verification visuelle) ===
 M (4 x 3) :
@@ -173,6 +179,9 @@ M (4 x 3) :
 Bilan : 14 / 14 verifications reussies.
 Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex2
 
+```
+
+
 
 #### Q4.1 Pourquoi mat_lire remplit-elle d’abord une matrice locale avant de l’affecter à *res ?
 
@@ -192,6 +201,8 @@ Comme mat_lire ne lit que le nombre exact d'entiers déclarés par le header (n�
 Les opérations fprintf écrivent dans un tampon (buffer) en mémoire. L'appel à fflush(f) force l'écriture immédiate de ce tampon vers le système d'exploitation, ce qui permet à mat_ecrire d’intercepter un éventuel échec d'écriture (disque plein,flux interrompu) et de retourner MAT_ERR_ECRITURE. Cela ne dispense pas l'appelant de vérifier le retour de fclose(f), car la fermeture physique du fichier libère les ressources système et peut elle-même échouer (notamment sur des disques distants ou réseau NFS).
 
 ### Exercice 3
+
+```
 === Exercice 3 : addition ===
 [OK]    (3.a) (2 x 3) + (3 x 2) : MAT_ERR_DIMENSIONS
 [OK]    (3.d) (2 x 3) + (2 x 3) : MAT_OK
@@ -211,6 +222,8 @@ Les opérations fprintf écrivent dans un tampon (buffer) en mémoire. L'appel �
 [OK]    resultat = entree refuse, a reste intacte
 [OK]    (3.f) echec d'allocation : MAT_ERR_ALLOCATION, r vide
 Bilan : 14 / 14 verifications reussies.
+
+```
 
 
 #### Q5.1 — `const Matrice *a` empêche-t-il `a->coef[0][0] = 7;` ?
@@ -254,6 +267,8 @@ Trois : ‘a’ et ‘b’ (lues avec succès) et ‘r’ (calculée avec succè
 ## 5. Vérifications mémoire
 
 ### Vérifications mémoire de l'exercice 1
+
+```
 valgrind --leak-check=full ./test_ex1 
 
 ==5184== Memcheck, a memory error detector
@@ -293,8 +308,12 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex1
 ==5184== For lists of detected and suppressed errors, rerun with: -s
 ==5184== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
+```
+
 
 ### Vérifications mémoire de l'exercice 2
+
+```
 valgrind --leak-check=full ./test_ex2 
 
 ==5825== Memcheck, a memory error detector
@@ -340,8 +359,11 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex2
 ==5825== For lists of detected and suppressed errors, rerun with: -s
 ==5825== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
+```
 
 ### Vérifications mémoire de l'exercice 3
+
+```
 valgrind --leak-check=full ./test_ex3 
 
 ==6460== Memcheck, a memory error detector
@@ -379,11 +401,14 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex3
 ==6460== For lists of detected and suppressed errors, rerun with: -s
 ==6460== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
+```
 
 
 ## 6. Démonstration finale
 
 ### Scénario 1 : addition, sans erreur 
+
+```
 valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/B.txt R.txt
 ==7332== Memcheck, a memory error detector
 ==7332== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
@@ -416,7 +441,11 @@ Résultat enregistré dans "R.txt".
 ==7332== For lists of detected and suppressed errors, rerun with: -s
 ==7332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
+```
+
 ### Scénario 2 : multiplication, sans erreur 
+
+```
 valgrind --leak-check=full ./demo_matrices mul donnees/A.txt donnees/C.txt R2.txt
 ==8869== Memcheck, a memory error detector
 ==8869== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
@@ -448,7 +477,11 @@ Résultat enregistré dans "R2.txt".
 ==8869== For lists of detected and suppressed errors, rerun with: -s
 ==8869== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
+```
+
 ### Scénario 3 : avec erreur 
+
+```
 valgrind --leak-check=full ./demo_matrices add donnees/A.txt donnees/C.txt R3.txt
 ==7837== Memcheck, a memory error detector
 ==7837== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
@@ -474,6 +507,8 @@ Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2)
 ==7837== 
 ==7837== For lists of detected and suppressed errors, rerun with: -s
 ==7837== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+```
 
 
  Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
