@@ -372,7 +372,7 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex2
 ==5825== All heap blocks were freed -- no leaks are possible
 ==5825== 
 ==5825== For lists of detected and suppressed errors, rerun with: -s
-==5825== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5825== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0) 
 
 ```
 
