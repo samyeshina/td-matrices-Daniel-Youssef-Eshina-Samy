@@ -37,59 +37,35 @@ main.c / demo_main —> matrice_io, matrice_calcul, matrice_alloc
 matrice_alloc —> matrice
 matrice_io & matrice_calcul —> matrice_alloc, matrice
 
+
+    main --> io
+    main --> calcul
+    main --> alloc
+
+    io --> alloc
+    io --> mat
+    
+    calcul --> alloc
+    calcul --> mat
+    
+    alloc --> mat
+    
 ### Graphe des inclusions : quel fichier inclut quel .h 
-flowchart TD
-    subgraph Fichiers Source
-        MAIN["main.c"]
-        MAT_C["matrice.c"]
-        ALLOC_C["matrice_alloc.c"]
-        IO_C["matrice_io.c"]
-        CALC_C["matrice_calcul.c"]
-    end
+    main --> io_h
+    main --> calcul_h
+    main --> alloc_h
+    main --> mat_h
 
-    subgraph En-têtes du projet (.h)
-        MAT_H["matrice.h"]
-        ALLOC_H["matrice_alloc.h"]
-        IO_H["matrice_io.h"]
-        CALC_H["matrice_calcul.h"]
-    end
+    io_c --> io_h
+    io_c --> alloc_h
+    calcul_c --> calcul_h
+    calcul_c --> alloc_h
+    alloc_c --> alloc_h
+    mat_c --> mat_h
 
-    subgraph En-têtes Système
-        STDIO["<stdio.h>"]
-        STDLIB["<stdlib.h>"]
-        STDDEF["<stddef.h>"]
-        LIMITS["<limits.h>"]
-        ERRNO["<errno.h>"]
-    end
-
-    %% Inclusions depuis main.c
-    MAIN --> MAT_H
-    MAIN --> ALLOC_H
-    MAIN --> IO_H
-    MAIN --> CALC_H
-
-    %% Inclusions entre fichiers .h
-    ALLOC_H --> MAT_H
-    IO_H --> MAT_H
-    IO_H --> STDIO
-    CALC_H --> MAT_H
-
-    %% Inclusions depuis les fichiers .c
-    MAT_C --> MAT_H
-    MAT_C --> STDDEF
-
-    ALLOC_C --> ALLOC_H
-    ALLOC_C --> STDLIB
-
-    IO_C --> IO_H
-    IO_C --> ALLOC_H
-    IO_C --> STDIO
-    IO_C --> STDLIB
-    IO_C --> ERRNO
-
-    CALC_C --> CALC_H
-    CALC_C --> ALLOC_H
-    CALC_C --> LIMITS
+    io_h --> mat_h
+    calcul_h --> mat_h
+    alloc_h --> mat_h
     
 ### Pourquoi le garde #ifndef est nécessaire?
 main.c inclut à la fois matrice.h, matrice_alloc.h, matrice_io.h et matrice_calcul.h. Sans la garde d'inclusion (#ifndef MATRICE_H / #define MATRICE_H / #endif), le préprocesseur recopiera la définition du type struct matrice et de la structure Matrice quatre fois consécutives dans main.c, ce qui provoquera une erreur de compilation pour redéfinition de type.
