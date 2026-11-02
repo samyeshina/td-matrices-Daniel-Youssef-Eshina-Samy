@@ -12,7 +12,13 @@ Daniel Youssef : @Daniel31-dive
 
 ### Sommaire
 1. [En-tête](#1-en-tête)
-2. 
+2. [Introduction](#2-introduction)
+3. [Conception](#3_conception)
+4. [Realisation](#4_realisation)
+5. [Vérifications mémoire](#5-vérifications-mémoire)
+6. [Démonstration finale](#démonstration-finale)
+7. [Bilan et difficultés](#bilan-et-difficultés)
+8. [Annexe - Code que nous avons écrit, commenté](#annexe---code-que-nous-avons-écrit,-commenté)
 ## 2. Introduction
 ### But du TD
 Ce TD vise à concevoir une petite bibliothèque C permettant de créer, sauvegarder, relire, afficher et calculer la somme et le produit des matrices d’entiers. A travers la complétion de plusieurs modules et d’un programme de démonstration qui nous ont été fournis, nous allons apprendre à distinguer un fichier d’interface (fichier.h) de son implémentation (fichier.c) en compilant séparément chaque modules puis en les assemblant par édition de liens. En se faisant, nous établirons également des règles de propriété de mémoire que nous devons respecter.
@@ -361,9 +367,6 @@ Pensez a verifier l'absence de fuite : valgrind --leak-check=full ./test_ex3
 
 
 
-
-
-
 ## 6. Démonstration finale
 
 ### Scénario 1 : addition, sans erreur 
@@ -487,7 +490,6 @@ mémoire ni accès invalide n'est signalé.
 
 **Bilan des tests fournis.** `test_ex1` : 16 / 16, `test_ex2` : 14 / 14,
 `test_ex3` : 14 / 14, sans aucun avertissement de compilation.
-
 
 
 ## 7. Bilan et difficultés
