@@ -13,8 +13,8 @@ Daniel Youssef : @Daniel31-dive
 ### Sommaire
 1. [En-tête](#1-en-tête)
 2. [Introduction](#2-introduction)
-3. [Conception](#3_conception)
-4. [Realisation](#4_realisation)
+3. [Conception](#3-conception)
+4. [Réalisation](#4-réalisation)
 5. [Vérifications mémoire](#5-vérifications-mémoire)
 6. [Démonstration finale](#démonstration-finale)
 7. [Bilan et difficultés](#bilan-et-difficultés)
