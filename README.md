@@ -107,6 +107,8 @@ Utilisation de static : Le mot-clé static rend les fonctions internes invisible
 Gestion de l'échec partiel d'allocation : Dans mat_allouer, si une allocation échoue au milieu du processus, la fonction libère les lignes déjà créées et le tableau de pointeurs principal. Cela évite les fuites de mémoire et renvoie proprement MAT_ERR_ALLOCATION.
 Détection des dépassements de capacité (overflow) : Les calculs sont effectués en long long (64 bits) puis comparés à INT_MIN et INT_MAX avant stockage. Cela permet de bloquer les dépassements d'entiers signés avant qu'ils ne provoquent un comportement indéfini.
 
+### Commande de compilation
+
 
 
 ## 4. Réalisation
