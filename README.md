@@ -515,7 +515,7 @@ Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2)
 ```
 
 
- Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
+Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale aucune fuite : A et B, déjà chargées, sont libérées par le point de sortie unique de main. » Pour les deux cas réussis : « La matrice résultat R, allouée par mat_additionner (ou mat_multiplier), est elle aussi libérée par mat_detruire(&r) au nettoyage final. » Ajoutez la remarque de la différence d’allocations : le scénario 1 en compte 22 et le cas d’erreur 14, car dans le cas d’erreur la matrice R n’est jamais allouée. 
 
 ### La vérification automatique GitHub Actions
 (valgrind sur les trois tests et sur `demo_matrices`) est verte : aucune fuite
@@ -546,10 +546,10 @@ mémoire ni accès invalide n'est signalé.
 
 
 ## 7. Bilan et difficultés
-Nous estimons avoir effectué une bonne répartition du travail (50-50).
-Répartition du travail:
-Daniel : 1a,1b + correction de l’exercice 1, exercise 3, exercise 4
-Eshina : 1c-1f, exercise 2 ,exercise 4
+Nous estimons avoir effectué une bonne répartition du travail (50-50).  
+Répartition du travail:  
+Daniel : 1a,1b + correction de l’exercice 1, exercise 3, exercise 4  
+Eshina : 1c-1f, exercise 2 ,exercise 4  
 
 Nous avons eu recours à des tutorial sur youtube pour apprendre à utiliser github proprement et la complétion des codes ayant été faite sur visual studio code, cela nous à faciliter les débugage. Nos erreurs les plus fréquentes étaient l’oubli d'une accolade ‘}’ ou des fautes de frappe (par exemple rse au lieu de res).
 
@@ -564,6 +564,8 @@ matrice.c
 ```
 case MAT_ERR_DIMENSIONS:  return "dimensions incompatibles";
 case MAT_ERR_DEPASSEMENT: return "dépassement de capacité";
+/*tarductions des codes d'erreur*/
+
 ```
 
 /* (1.b) */
@@ -572,6 +574,7 @@ return m != NULL
     && m->coef != NULL 
     && m->nb_lignes >= 1 && m->nb_lignes <= MAT_DIM_MAX 
     && m->nb_colonnes >= 1 && m->nb_colonnes <= MAT_DIM_MAX;
+/*verifie que les pointeurs ne sont pas nulls et respectent les limites de dimensions*/
 ```
     
 
@@ -581,6 +584,7 @@ matrice_alloc.c
 if (nb_lignes < 1 || nb_lignes > MAT_DIM_MAX || 
     nb_colonnes < 1 || nb_colonnes > MAT_DIM_MAX) {
     return MAT_ERR_ARGUMENT;}
+/*controle des arguments avant la reservation de la memoire*/
 ```
 
 /* (1.d) */
@@ -593,6 +597,9 @@ for (int i = 0; i < nb_lignes; i++) {
         free(coef);                  /* Libérer le tableau de pointeurs */
         return MAT_ERR_ALLOCATION;   /* Renvoyer l'erreur d'allocation */
     } }
+/*Allocation dynamique à deux niveaux avec gestion de l'échec partiel :
+ * Si la réservation de la i-ième ligne échoue, on remonte en arrière pour
+ * libérer les lignes déjà allouées (0 à i-1) ainsi que le tableau de pointeurs.*/
 ```
 
 /* (1.e) */
@@ -601,6 +608,9 @@ res->coef = coef;
 res->nb_lignes = nb_lignes;
 res->nb_colonnes = nb_colonnes;
 return MAT_OK;
+/*affectation du coef et pointeur*/
+/*Règle R2 : transfert de propriété de la mémoire à l'appelant */
+
 ```
 
 /* (1.f) */
@@ -609,6 +619,8 @@ if (m->coef != NULL) {
     for (int i = 0; i < m->nb_lignes; i++) {
         free(m->coef[i]);}
     free(m->coef); }
+/*libération de la mémoire*/
+/*un second appel est sans danger (Règle R6)/*
 ```
 
 matrice_io.c
@@ -617,6 +629,7 @@ matrice_io.c
 for (int i = 0; i < m->nb_lignes; i++) { 
       for (int j = 0; j < m->nb_colonnes; j++) { 
             printf(" %8d", m->coef[i][j]); } putchar('\n'); } }
+/* affichage de la matrice pour la sortie standard */
 ```
 
 /* (2.b) */ 
@@ -630,12 +643,16 @@ for (int i = 0; i < m->nb_lignes; i++) {
                   returnMAT_ERR_ECRITURE; } } 
 
 if (fputc('\n', f) == EOF) return MAT_ERR_ECRITURE; }
+
+/*écriture de la matrice */
 ```
 
 /* (2.c) */ 
 ```
 if (nb_lignes < 1 || nb_lignes > MAT_DIM_MAX || nb_colonnes < 1 || nb_colonnes > MAT_DIM_MAX) {
-return MAT_ERR_FORMAT; } 
+return MAT_ERR_FORMAT; }
+
+/*Validation des dimensions lues dans le header du fichier*/
 ```
 
 
@@ -646,6 +663,8 @@ Matrice tmp;
 err = mat_allouer(&tmp, nb_lignes, nb_colonnes); 
 if (err != MAT_OK) 
    return err;
+/* Utilisation d'une matrice temporaire 'tmp' :
+ * Garantit que *res ne sera pas modifié si une erreur de lecture survient en cours de route (Règle R3).*/
 ``` 
 
 /* (2.e) */ 
@@ -655,12 +674,17 @@ for (int i = 0; i < nb_lignes; i++) {
            err = lire_entier(f, &tmp.coef[i][j]); 
            if (err != MAT_OK) { 
               mat_detruire(&tmp); 
-              return err; } } } 
+              return err; } } }
+
+/*Lecture séquentielle des entiers depuis le flux :
+ * En cas d'erreur de format ou de fin de fichier inattendue, on détruit immédiatement
+ * la matrice temporaire tmp pour éviter tout blocage de mémoire. */
 ```
 
 /* (2.f) */ 
 ```
-*res = tmp; returnMAT_OK; 
+*res = tmp; returnMAT_OK;
+/* Validation finale : transfert du résultat vers la variable de l'appelant */
 ```
 
 
