@@ -521,25 +521,22 @@ Même lorsque le calcul échoue (dimensions incompatibles), valgrind ne signale 
 (valgrind sur les trois tests et sur `demo_matrices`) est verte : aucune fuite
 mémoire ni accès invalide n'est signalé.
 
-| # | Commande | Comportement observé | Code |
-|---|----------|----------------------|------|
+### Intégration Continue (GitHub Actions)
 
-| 1 |  `add A.txt B.txt R.txt` | A B (3 x 2) , R = A + B puis «R├⌐sultat enregistr├⌐ dans "R.txt».
- | 2 | `mul A.txt C.txt R2.txt` | A (4 x 3) et C (3 x 2) sont affichées, R = A x B est de dimensions 4 x 2 puis «R├⌐sultat enregistr├⌐ dans "R2.txt».
+La vérification automatique sur GitHub Actions s'exécute à chaque `push` sur la branche `main`.
 
-| 3 | `add A.txt C.txt R3.txt` | affiche les matrices A et B puis Message Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2). Aucun fichier n'est créé. 
+| # | Commande exécutée | Comportement & Message observé | Statut |
+|---|-------------------|--------------------------------|--------|
+| 1 | `add A.txt B.txt R.txt` | Affichage de $A$, $B$ et $R = A + B$. Écriture : `Résultat enregistré dans "R.txt".` | `EXIT_SUCCESS` |
+| 2 | `mul A.txt C.txt R2.txt` | Affichage de $A$, $C$ et $R = A \times C$ ($4 \times 2$). Écriture : `Résultat enregistré dans "R2.txt".` | `EXIT_SUCCESS` |
+| 3 | `add A.txt C.txt R3.txt` | Affichage de $A$ et $C$. Erreur : `calcul impossible : dimensions incompatibles (A : 4 x 3, B : 3 x 2)`. Aucun fichier créé. | `EXIT_FAILURE` |
+| 4 | `mul A.txt B.txt R3.txt` | Affichage de $A$ et $B$. Erreur : `calcul impossible : dimensions incompatibles (A : 4 x 3, B : 4 x 3)`. | `EXIT_FAILURE` |
+| 5 | `add absent.txt B.txt R3.txt` | Erreur d'ouverture : `impossible d'ouvrir "absent.txt" : No such file or directory`. | `EXIT_FAILURE` |
+| 6 | `add invalide.txt B.txt R3.txt` | Erreur de lecture : `lecture de "donnees/invalide.txt" : fichier mal formé`. | `EXIT_FAILURE` |
+| 7 | `add tronque.txt B.txt R3.txt` | Erreur de lecture : `lecture de "donnees/tronque.txt" : fichier mal formé`. | `EXIT_FAILURE` |
+| 8 | `add A.txt B.txt dossier_inexistant/R.txt` | Calcul et affichage de $A$, $B$, $R$. Erreur de création : `impossible de créer "dossier_inexistant/R.txt" : No such file or directory`. | `EXIT_FAILURE` |
+| 9 | `add A.txt` ou `foo a b c` | Erreur de syntaxe : `Usage : demo_matrices <add|mul> <fichier_A> <fichier_B> <fichier_R>`. | `EXIT_FAILURE` |
 
-| 4 | `mul A.txt B.txt R3.txt` | affiche les matrices A et B puis Même erreur, Erreur : calcul impossible : dimensions incompatibles (A : 4 x 3, B : 4 x 3)
-
-| 5 | `add absent.txt B.txt R3.txt` | Erreur : impossible d'ouvrir "absent.txt" : No such file or directory
-
-| 6 | `add invalide.txt B.txt R3.txt` |Erreur : lecture de "donnees\invalide.txt" : fichier mal form├⌐
-
-| 7 | `add tronque.txt B.txt R3.txt` |Erreur : lecture de "donnees\tronque.txt" : fichier mal form├⌐
-
-| 8 | `add A.txt B.txt dossier_inexistant\R.txt` | Le calcul réussit et A, B, R sont affichées, puis Erreur : impossible de cr├⌐er "dossier_inexistant\R.txt" : No such file or directory
-
-| 10 | `add A.txt` ou `foo a b c` | Message d'usage Usage : demo_matrices <add|mul> <fichier_A> <fichier_B> <fichier_R>
 
 **Bilan des tests fournis.** `test_ex1` : 16 / 16, `test_ex2` : 14 / 14,
 `test_ex3` : 14 / 14, sans aucun avertissement de compilation.
