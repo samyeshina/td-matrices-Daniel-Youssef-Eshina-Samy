@@ -16,9 +16,10 @@ Daniel Youssef : @Daniel31-dive
 3. [Conception](#3-conception)
 4. [Réalisation](#4-réalisation)
 5. [Vérifications mémoire](#5-vérifications-mémoire)
-6. [Démonstration finale](#démonstration-finale)
-7. [Bilan et difficultés](#bilan-et-difficultés)
-8. [Annexe - Code que nous avons écrit, commenté](#annexe---code-que-nous-avons-écrit,-commenté)
+6. [Démonstration finale](#6-démonstration-finale)
+7. [Bilan et difficultés](#7-bilan-et-difficultés)
+8. [Annexe - Code que nous avons écrit, commenté](#8-annexe---code-que-nous-avons-écrit,-commenté)
+9. 
 ## 2. Introduction
 ### But du TD
 Ce TD vise à concevoir une petite bibliothèque C permettant de créer, sauvegarder, relire, afficher et calculer la somme et le produit des matrices d’entiers. A travers la complétion de plusieurs modules et d’un programme de démonstration qui nous ont été fournis, nous allons apprendre à distinguer un fichier d’interface (fichier.h) de son implémentation (fichier.c) en compilant séparément chaque modules puis en les assemblant par édition de liens. En se faisant, nous établirons également des règles de propriété de mémoire que nous devons respecter.
