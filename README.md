@@ -6,9 +6,9 @@ Membres : YOUSSEF Daniel, SAMY Eshina - TD 1 STI 3A
 TD 1 - STI 3A
 Date de Remise: 30/10/26
 
-Membres du groupe et identifiants GitHub.
-Eshina Samy : @samyeshina
-Daniel Youssef : @Daniel31-dive
+Membres du groupe et identifiants GitHub.  
+Eshina Samy : @samyeshina  
+Daniel Youssef : @Daniel31-dive   
 
 ### Sommaire
 1. [En-tête](#1-en-tête)
