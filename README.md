@@ -18,7 +18,7 @@ Daniel Youssef : @Daniel31-dive
 5. [Vérifications mémoire](#5-vérifications-mémoire)
 6. [Démonstration finale](#6-démonstration-finale)
 7. [Bilan et difficultés](#7-bilan-et-difficultés)
-8. [Annexe - Code que nous avons écrit, commenté](#8-annexe---code-que-nous-avons-écrit,-commenté)
+8. [Annexe](#8-annexe)
 
 ## 2. Introduction
 ### But du TD
@@ -503,7 +503,8 @@ Nous avons eu recours à des tuto youtube pour apprendre à utiliser github prop
 
 Une utilisation de l’ia gemini et claude pour trouver des alternatives à Valgrind sur Windows et MacOs car nous voulions également tester les modules sur nos ordinateurs portables respectifs. 
 
-## 8. Annexe - Code que nous avons écrit, commenté
+## 8. Annexe
+Code que nous avons écrit, commenté
 
 matrice.c 
 /* (1.a) */
