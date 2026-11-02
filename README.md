@@ -33,7 +33,7 @@ L'ensemble des exercices 1 à 4 est validé et fonctionnel. Les trois programmes
 
 ## 3. Conception
 
-## Schéma des modules
+### Schéma des modules
 
 ```mermaid
 flowchart TD
@@ -47,7 +47,7 @@ flowchart TD
     alloc --> mat
 ```
 
-## Graphe des inclusions
+### Graphe des inclusions
 
 ```mermaid
 flowchart LR
@@ -59,24 +59,6 @@ flowchart LR
     calcul_h --> mat_h
     alloc_h --> mat_h
 ```
-
-### Schéma des modules : les 4 modules et le programme principal, avec qui appelle qui
-main.c / demo_main —> matrice_io, matrice_calcul, matrice_alloc
-matrice_alloc —> matrice
-matrice_io & matrice_calcul —> matrice_alloc, matrice
-
-    
-### Graphe des inclusions : quel fichier inclut quel .h 
-main.c —> "matrice.h"
-main.c —>"matrice_alloc.h"  ──> "matrice.h"
-main.c —>"matrice_io.h"  ──> "matrice.h", <stdio.h>
-main.c —>"matrice_calcul.h" ──> "matrice.h"
-
-
-matrice_io.c  ──> "matrice_io.h", "matrice_alloc.h", <stdio.h>, <stdlib.h>, <errno.h>
-matrice_calcul.c ──> "matrice_calcul.h", "matrice_alloc.h", <limits.h>
-matrice_alloc.c  ──> "matrice_alloc.h", <stdlib.h>
-matrice.c ──> "matrice.h", <stddef.h>
 
     
 ### Pourquoi le garde #ifndef est nécessaire?
