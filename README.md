@@ -10,7 +10,9 @@ Membres du groupe et identifiants GitHub.
 Eshina Samy : @samyeshina
 Daniel Youssef : @Daniel31-dive
 
-
+### Sommaire
+1. [En-tête](#1-en-tête)
+2. 
 ## 2. Introduction
 ### But du TD
 Ce TD vise à concevoir une petite bibliothèque C permettant de créer, sauvegarder, relire, afficher et calculer la somme et le produit des matrices d’entiers. A travers la complétion de plusieurs modules et d’un programme de démonstration qui nous ont été fournis, nous allons apprendre à distinguer un fichier d’interface (fichier.h) de son implémentation (fichier.c) en compilant séparément chaque modules puis en les assemblant par édition de liens. En se faisant, nous établirons également des règles de propriété de mémoire que nous devons respecter.
