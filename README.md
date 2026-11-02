@@ -555,23 +555,32 @@ Une utilisation de l’ia gemini et claude pour trouver des alternatives à Valg
 Code que nous avons écrit, commenté
 
 matrice.c 
+
 /* (1.a) */
+```
 case MAT_ERR_DIMENSIONS:  return "dimensions incompatibles";
 case MAT_ERR_DEPASSEMENT: return "dépassement de capacité";
+```
 
 /* (1.b) */
+```
 return m != NULL 
     && m->coef != NULL 
     && m->nb_lignes >= 1 && m->nb_lignes <= MAT_DIM_MAX 
     && m->nb_colonnes >= 1 && m->nb_colonnes <= MAT_DIM_MAX;
+```
+    
 
 matrice_alloc.c
 /* (1.c) */
+```
 if (nb_lignes < 1 || nb_lignes > MAT_DIM_MAX || 
     nb_colonnes < 1 || nb_colonnes > MAT_DIM_MAX) {
     return MAT_ERR_ARGUMENT;}
+```
 
 /* (1.d) */
+```
 for (int i = 0; i < nb_lignes; i++) {
     coef[i] = mat_calloc((size_t)nb_colonnes, sizeof **coef);
     if (coef[i] == NULL) {
@@ -580,26 +589,34 @@ for (int i = 0; i < nb_lignes; i++) {
         free(coef);                  /* Libérer le tableau de pointeurs */
         return MAT_ERR_ALLOCATION;   /* Renvoyer l'erreur d'allocation */
     } }
+```
 
 /* (1.e) */
+```
 res->coef = coef;
 res->nb_lignes = nb_lignes;
 res->nb_colonnes = nb_colonnes;
 return MAT_OK;
+```
 
 /* (1.f) */
+```
 if (m->coef != NULL) {
     for (int i = 0; i < m->nb_lignes; i++) {
         free(m->coef[i]);}
     free(m->coef); }
+```
 
 matrice_io.c
 /* (2.a) */ 
+```
 for (int i = 0; i < m->nb_lignes; i++) { 
       for (int j = 0; j < m->nb_colonnes; j++) { 
             printf(" %8d", m->coef[i][j]); } putchar('\n'); } }
+```
 
 /* (2.b) */ 
+```
 for (int i = 0; i < m->nb_lignes; i++) { 
      for (int j = 0; j < m->nb_colonnes; j++) { 
           if (j == 0) { 
@@ -609,42 +626,54 @@ for (int i = 0; i < m->nb_lignes; i++) {
                   returnMAT_ERR_ECRITURE; } } 
 
 if (fputc('\n', f) == EOF) return MAT_ERR_ECRITURE; }
+```
 
 /* (2.c) */ 
+```
 if (nb_lignes < 1 || nb_lignes > MAT_DIM_MAX || nb_colonnes < 1 || nb_colonnes > MAT_DIM_MAX) {
 return MAT_ERR_FORMAT; } 
+```
 
 
 
 /* (2.d) */ 
+```
 Matrice tmp; 
 err = mat_allouer(&tmp, nb_lignes, nb_colonnes); 
 if (err != MAT_OK) 
-   return err; 
+   return err;
+``` 
 
 /* (2.e) */ 
+```
 for (int i = 0; i < nb_lignes; i++) { 
       for (int j = 0; j < nb_colonnes; j++) { 
            err = lire_entier(f, &tmp.coef[i][j]); 
            if (err != MAT_OK) { 
               mat_detruire(&tmp); 
               return err; } } } 
+```
 
 /* (2.f) */ 
+```
 *res = tmp; returnMAT_OK; 
+```
 
 
 Addition (mat_additionner)
 
 /* 3.a */
+```
 if (a->nb_lignes != b->nb_lignes || a->nb_colonnes != b->nb_colonnes)
     return MAT_ERR_DIMENSIONS;
 
 /* Deux matrices ne s'additionnent que si elles ont le même nombre de
  * lignes ET le même nombre de colonnes. On compare les deux séparément :
  * une 2x3 et une 3x2 ont autant de coefficients mais ne s'additionnent pas. */
+ ```
 
 /* 3.b */
+```
 juste après Matrice r = MATRICE_VIDE; :
 err = mat_allouer(&r, a->nb_lignes, a->nb_colonnes);
 if (err != MAT_OK)
@@ -652,46 +681,55 @@ if (err != MAT_OK)
 /* Le résultat a les dimensions de a. On l'alloue dans une matrice locale r :
  * si une erreur survient plus loin, *res reste vide et l'appelant ne reçoit
  * jamais une matrice à moitié calculée. */
+ ```
 
 
 
 
-/ *3.c , à la place de long long s = 0; : * /
+/ *3.c ,
+``` à la place de long long s = 0; : * /
 long long s = (long long)a->coef[i][j] + b->coef[i][j];
+
 
 /* La somme est faite en long long : additionner deux int ne peut pas
  * déborder d'un long long. Sans le (long long), le calcul se ferait en int
  * et pourrait déborder avant le test (comportement indéfini en C). */
-
+```
 
 /*3.d* à la fin (en supprimant les deux lignes provisoires) : * /
+```
 *res = r;
 return MAT_OK;
 
 /* Tout a réussi : on transmet r à l'appelant (règle R2). C'est lui qui
  * possède désormais la mémoire et qui devra appeler mat_detruire. */
-
+```
 
 /* Multiplication (mat_multiplier)
 3.e */
+```
 
 if (a->nb_colonnes != b->nb_lignes)
     return MAT_ERR_DIMENSIONS;
 /* Le produit a x b n'existe que si le nombre de COLONNES de a est égal
  * au nombre de LIGNES de b (a : n x p, b : p x q). */
+ ```
 
 /* 3.f juste après Matrice r = MATRICE_VIDE; : */
+```
 err = mat_allouer(&r, a->nb_lignes, b->nb_colonnes);
 if (err != MAT_OK)
     return err;
 /* Le résultat est de dimensions n x q : autant de lignes que a,
  * autant de colonnes que b. */
+ ```
 
 
 
 
 
 /* 3.g, dans la double boucle, après long long s = 0; : */
+```
 /* c(i,j) = somme sur k de a(i,k) x b(k,j) : ligne i de a fois colonne j de b. */ 
 for (int k = 0; k < a->nb_colonnes; k++) {
     long long p = (long long)a->coef[i][k] * b->coef[k][j];
@@ -705,22 +743,28 @@ for (int k = 0; k < a->nb_colonnes; k++) {
     }
     s += p;
 }
+```
 
 
 /* 3.h, à la fin (en supprimant les deux lignes provisoires) : */
+```
 *res = r;
 return MAT_OK;
 /* Même principe qu'en 3.d : transfert de propriété à l'appelant. */
+```
 
 
 /* 4.a : */
+```
 mat_afficher("A", &a);
 mat_afficher("B", &b);
 /* mat_afficher attend un pointeur, d'où le & devant chaque matrice. */ 
+```
 
 
 
 /*4.b (en supprimant (void)addition;) :
+```
 /* addition vaut 1 si l'utilisateur a tapé "add", 0 sinon. L'opérateur ? :
  * choisit donc la fonction à appeler. */
 MatErreur err = addition ? mat_additionner(&a, &b, &r)
@@ -734,14 +778,19 @@ if (err != MAT_OK) {
             a.nb_lignes, a.nb_colonnes, b.nb_lignes, b.nb_colonnes);
     goto nettoyage;/* saute au point de sortie unique, en bas de main */ 
 }
+```
 
 /* 4.c :
+```
 mat_afficher(addition ? "R = A + B" : "R = A x B", &r);
 /* Le nom affiché dépend de l'opération demandée. */ 
+```
 
 /* 4.d, après l’enregistrement fourni :
+```
 /* On arrive ici seulement si tout a réussi. statut valait EXIT_FAILURE
  * depuis le début : toute sortie par goto nettoyage avant cette ligne
  * signale donc un échec. */
 printf("Résultat enregistré dans \"%s\".\n", argv[4]);
 statut = EXIT_SUCCESS;
+```
